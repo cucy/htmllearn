@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Actionscript template
 # Build and Release Folders
-.idea/*
+.idea/
 bin/
 bin-debug/
 bin-release/
