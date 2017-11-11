@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="static/bootstrap.min.css">
+    <script src="static/jquery-2.2.4.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <style>
+        .container {
+            width: 40%;
+            margin: 20px auto 0 auto;
+        }
+
+        .removed {
+            color: gray;
+        }
+
+        .removed label {
+            text-decoration: line-through;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .footer {
+            font-size: 0.7em;
+            margin-top: 20vh;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>购物列表</h2>
+    <div class="input-group">
+        <input placeholder="添加商品到列表" type="text" class="js-new-item form-control">
+        <span class="input-group-btn">
+            <button @click="addItem" class="js-add btn btn-default">添加</button>
+        </span>
+    </div>
+    <ul>
+        <li>
+            <div class="checkbox">
+                <label>
+                    <input class="js-item" name="list" type="checkbox"> Carrot
+                </label>
+            </div>
+        </li>
+        <li>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="list" class="js-item">Book
+                </label>
+            </div>
+        </li>
+        <li class="removed">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="js-item" name="list" checked>Gift for aunt's birthday
+                </label>
+            </div>
+        </li>
+    </ul>
+    <div class="footer">
+        <hr/>
+        <em>Change the title of your shopping list here 改变标题</em>
+        <input class="js-change-title" type="text" value="我的商品列表">
+    </div>
+</div>
+<script>
+    $().ready(function () {
+        function onAdd() {
+            var $ul, li, $li, $label, $div, vaule;
+            vaule = $('.js-new-item').val();
+            if (vaule === '') {
+                return;
+            }
+            $ul = $('ul');
+            $li = $('<li>').appendTo($ul);
+            $div = $('<div>').addClass('checkbox')
+                .appendTo($li);
+            $label = $('<label>').appendTo($div);
+            $('<input>')
+                .attr('type', 'checkbox')
+                .addClass('item')
+                .attr('name', 'list')
+                .click(toggleRemoved)
+                .appendTo($label);
+            $label.append(vaule);
+            $('.js-new-item').val('');
+        }
+
+        function toggleRemoved(ev) {
+            var $el;
+            $el = $(ev.currentTarget);
+            $el.closest('li').toggleClass('removed');
+        }
+
+        function onChangeTitle() {
+            $('h2').text($('.js-change-title').val());
+        }
+
+        $('.js-add').click(onAdd);
+        $('.js-item').click(toggleRemoved);
+        $('.js-change-title').keyup(onChangeTitle);
+
+    });
+</script>
+</body>
+</html>
